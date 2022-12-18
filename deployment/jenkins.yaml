@@ -51,6 +51,7 @@ spec:
     requests:
       storage: 10Gi
   volumeName: pv-hostpath
+  storageClassName: standard
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -64,3 +65,4 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/tmp/pv-hostpath"
+  storageClassName: standard
