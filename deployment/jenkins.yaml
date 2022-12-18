@@ -25,8 +25,7 @@ spec:
           mountPath: /var/jenkins_home
       volumes:
       - name: jenkins-data
-        persistentVolumeClaim:
-          claimName: jenkins-data-pvc
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -40,30 +39,3 @@ spec:
   - protocol: TCP
     port: 8080
     targetPort: 8080
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jenkins-data-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  volumeName: pv-hostpath
-  storageClassName: standard
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pv-hostpath
-spec:
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  hostPath:
-    path: "/tmp/pv-hostpath"
-  storageClassName: standard
